@@ -1,3 +1,8 @@
+import { outPutWidth } from "./style";
+
+console.log(outPutWidth(3))
+
+//classes
 class IterativeElement {
     public readonly content: string;
     public type: string;
@@ -25,82 +30,82 @@ const creatButtoms = [
     {
         content: "7",
         type: "number",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "8",
         type: "number",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "9",
         type: "number",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "+",
         type: "operator",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "4",
         type: "number",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "5",
         type: "number",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "6",
         type: "number",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "-",
         type: "operator",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "1",
         type: "number",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "2",
         type: "number",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "3",
         type: "number",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "/",
         type: "operator",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "AC",
         type: "result",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "0",
         type: "number",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "=",
         type: "result",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     },
     {
         content: "X",
         type: "operator",
-        operation: (n) => {return n}
+        operation: (n:any) => {return n}
     }
 ];
 
@@ -109,7 +114,7 @@ const buttomsObj: IterativeElement[] = [];
 const orderButtons: IterativeElement[][] = [[]]
 
 function appInit(): void {
-    generateButtoms();
+    generateButtoms(  );
 }
 
 function generateButtoms(): void {
@@ -119,6 +124,7 @@ function generateButtoms(): void {
 
     drawButtoms();
 }
+
 
 function drawButtoms(): void {
     const line: number =  Math.ceil(Math.sqrt(buttomsObj.length));
@@ -152,7 +158,7 @@ function drawButtoms(): void {
         }
         i++
     }
-
+  
     orderButtons.map((a, q) => {
 
         const d: HTMLElement = document.createElement('div');

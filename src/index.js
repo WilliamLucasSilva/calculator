@@ -1,124 +1,127 @@
-var IterativeElement = /** @class */ (function () {
-    function IterativeElement(content, type, operation) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const style_1 = require("./style");
+console.log((0, style_1.outPutWidth)(3));
+//classes
+class IterativeElement {
+    constructor(content, type, operation) {
         this.content = content;
         this.type = type;
         this.operation = operation;
     }
-    IterativeElement.prototype.addOperation = function (obj) {
-        var _this = this;
+    addOperation(obj) {
         if (this.type == "number") {
-            obj.addEventListener('click', function () {
-                output.innerHTML += String(_this.operation(Number(_this.content)));
+            obj.addEventListener('click', () => {
+                output.innerHTML += String(this.operation(Number(this.content)));
             });
         }
-    };
-    return IterativeElement;
-}());
-var fatherElement = document.querySelector('#main');
-var output = document.querySelector('.output');
-var creatButtoms = [
+    }
+}
+const fatherElement = document.querySelector('#main');
+const output = document.querySelector('.output');
+const creatButtoms = [
     {
         content: "7",
         type: "number",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "8",
         type: "number",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "9",
         type: "number",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "+",
         type: "operator",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "4",
         type: "number",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "5",
         type: "number",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "6",
         type: "number",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "-",
         type: "operator",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "1",
         type: "number",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "2",
         type: "number",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "3",
         type: "number",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "/",
         type: "operator",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "AC",
         type: "result",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "0",
         type: "number",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "=",
         type: "result",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     },
     {
         content: "X",
         type: "operator",
-        operation: function (n) { return n; }
+        operation: (n) => { return n; }
     }
 ];
-var buttomsObj = [];
-var orderButtons = [[]];
+const buttomsObj = [];
+const orderButtons = [[]];
 function appInit() {
     generateButtoms();
 }
 function generateButtoms() {
-    creatButtoms.forEach(function (b) {
+    creatButtoms.forEach(b => {
         buttomsObj.push(new IterativeElement(b.content, b.type, b.operation));
     });
     drawButtoms();
 }
 function drawButtoms() {
-    var line = Math.ceil(Math.sqrt(buttomsObj.length));
-    var collum = Math.ceil(buttomsObj.length / line);
-    for (var i_1 = 1; i_1 < line; i_1++) {
+    const line = Math.ceil(Math.sqrt(buttomsObj.length));
+    const collum = Math.ceil(buttomsObj.length / line);
+    for (let i = 1; i < line; i++) {
         orderButtons.push([]);
     }
-    var i = 1;
-    var n = 1;
-    var m = 1;
-    var e = 0;
+    let i = 1;
+    let n = 1;
+    let m = 1;
+    let e = 0;
     while (i <= (collum * line) + line) {
         if (n <= line + 1) {
             if (m <= collum) {
@@ -138,14 +141,14 @@ function drawButtoms() {
         }
         i++;
     }
-    orderButtons.map(function (a, q) {
-        var d = document.createElement('div');
-        d.id = "".concat(q);
+    orderButtons.map((a, q) => {
+        const d = document.createElement('div');
+        d.id = `${q}`;
         fatherElement === null || fatherElement === void 0 ? void 0 : fatherElement.appendChild(d);
         d.classList.add('collum');
-        var dElement = document.getElementById("".concat(q));
-        a.map(function (b, n) {
-            var e = document.createElement('button');
+        const dElement = document.getElementById(`${q}`);
+        a.map((b, n) => {
+            const e = document.createElement('button');
             if (b.type != 'null') {
                 e.textContent = b.content;
                 e.className = b.type;
