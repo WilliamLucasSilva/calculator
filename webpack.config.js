@@ -35,27 +35,8 @@ module.exports = {
                         border: 0px;
                     }
                     
-                    body{
-                        width: 99%;
-                        height: 98%;
-                        position: absolute;
-                    
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                    }
-                    
-                    main{
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        
-                        flex-direction: column;
-                    }
-                    
                     .output{
                         width: 100%;
-                        max-width: 100%;
                         height: 35px;
                         display: flex;
                     
@@ -110,7 +91,7 @@ module.exports = {
                 <body>
                     <div id="body">
                         <main id="main">
-                            <div class = "output"></div>
+                            <div id="output" class = "output"></div>
 
                         </main>
                     </div>

@@ -1,7 +1,10 @@
 "use strict";
+//ageitar a divisão
 Object.defineProperty(exports, "__esModule", { value: true });
 const style_1 = require("./style");
-console.log((0, style_1.outPutWidth)(3));
+const fixedStyle_1 = require("./fixedStyle");
+const creatButtoms_1 = require("./creatButtoms");
+(0, fixedStyle_1.fixedStyle)();
 //classes
 class IterativeElement {
     constructor(content, type, operation) {
@@ -12,102 +15,50 @@ class IterativeElement {
     addOperation(obj) {
         if (this.type == "number") {
             obj.addEventListener('click', () => {
-                output.innerHTML += String(this.operation(Number(this.content)));
+                breakNum.unshift(this.operation(Number(this.content)));
+                output.innerHTML = String(breakToNum(breakNum));
+            });
+        }
+        if (this.type == "result") {
+            obj.addEventListener('click', () => {
+                output.innerHTML = this.content == "AC" ? this.operation() : this.operation(operations, operationStory, breakToNum(breakNum), result);
+                result = this.content == "AC" ? null : this.operation(operations, operationStory, breakToNum(breakNum), result);
+                breakNum = [];
+            });
+        }
+        if (this.type == "operator") {
+            obj.addEventListener('click', () => {
+                if (result == null) {
+                    result = breakToNum(breakNum);
+                }
+                else {
+                    if (breakNum.length && operationStory != null) {
+                        result = operations[operationStory](breakToNum(breakNum), result);
+                        output.innerHTML = String(result);
+                    }
+                }
+                breakNum = [];
+                operationMap.push(this.content);
+                operations.push(this.operation);
+                operationStory = operationMap.findIndex((c) => c === this.content);
             });
         }
     }
 }
 const fatherElement = document.querySelector('#main');
 const output = document.querySelector('.output');
-const creatButtoms = [
-    {
-        content: "7",
-        type: "number",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "8",
-        type: "number",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "9",
-        type: "number",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "+",
-        type: "operator",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "4",
-        type: "number",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "5",
-        type: "number",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "6",
-        type: "number",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "-",
-        type: "operator",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "1",
-        type: "number",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "2",
-        type: "number",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "3",
-        type: "number",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "/",
-        type: "operator",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "AC",
-        type: "result",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "0",
-        type: "number",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "=",
-        type: "result",
-        operation: (n) => { return n; }
-    },
-    {
-        content: "X",
-        type: "operator",
-        operation: (n) => { return n; }
-    }
-];
+let breakNum = [];
+let result = null;
+let operationStory = null;
+let operations = [];
+let operationMap = [];
 const buttomsObj = [];
 const orderButtons = [[]];
 function appInit() {
     generateButtoms();
 }
 function generateButtoms() {
-    creatButtoms.forEach(b => {
+    creatButtoms_1.creatButtoms.forEach(b => {
         buttomsObj.push(new IterativeElement(b.content, b.type, b.operation));
     });
     drawButtoms();
@@ -118,6 +69,7 @@ function drawButtoms() {
     for (let i = 1; i < line; i++) {
         orderButtons.push([]);
     }
+    (0, style_1.outPutWidth)(collum);
     let i = 1;
     let n = 1;
     let m = 1;
@@ -129,7 +81,7 @@ function drawButtoms() {
                     orderButtons[n - 1][m - 1] = new IterativeElement(buttomsObj[e].content, buttomsObj[e].type, buttomsObj[e].operation);
                 }
                 else {
-                    orderButtons[n - 1][m - 1] = new IterativeElement('null', 'null', creatButtoms[1].operation);
+                    orderButtons[n - 1][m - 1] = new IterativeElement('null', 'null', creatButtoms_1.creatButtoms[1].operation);
                 }
                 m++;
                 e++;
@@ -147,7 +99,7 @@ function drawButtoms() {
         fatherElement === null || fatherElement === void 0 ? void 0 : fatherElement.appendChild(d);
         d.classList.add('collum');
         const dElement = document.getElementById(`${q}`);
-        a.map((b, n) => {
+        a.map((b) => {
             const e = document.createElement('button');
             if (b.type != 'null') {
                 e.textContent = b.content;
@@ -157,5 +109,12 @@ function drawButtoms() {
             }
         });
     });
+}
+function breakToNum(bA) {
+    let n = 0;
+    for (let i = 0; i < bA.length; i++) {
+        n += bA[i] * Math.pow(10, i);
+    }
+    return n;
 }
 appInit();

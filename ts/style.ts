@@ -1,5 +1,7 @@
 export function outPutWidth(n: number) {
+    let size = n * 35
 
+    let output = document.getElementById('output')
 
-    return n * 35
+    output!.style.maxWidth = `${size}px`
 }

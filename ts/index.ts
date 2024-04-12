@@ -1,6 +1,10 @@
-import { outPutWidth } from "./style";
+//ageitar a divisão
 
-console.log(outPutWidth(3))
+import { outPutWidth } from "./style";
+import { fixedStyle } from "./fixedStyle";
+import { creatButtoms } from "./creatButtoms";
+
+fixedStyle()
 
 //classes
 class IterativeElement {
@@ -17,8 +21,36 @@ class IterativeElement {
     addOperation(obj: HTMLElement){
         if(this.type == "number"){
             obj.addEventListener('click', () => {
-                output!.innerHTML += String(this.operation(Number(this.content)))
+                breakNum.unshift(this.operation(Number(this.content)))
+                output!.innerHTML = String(breakToNum(breakNum))
+
             });
+        }
+        if(this.type == "result"){
+            obj.addEventListener('click', () => {
+                output!.innerHTML = this.content == "AC" ? this.operation() : this.operation(operations, operationStory, breakToNum(breakNum), result)
+                result = this.content == "AC" ? null : this.operation(operations, operationStory, breakToNum(breakNum), result)
+                breakNum = []
+            })
+        }
+        if(this.type == "operator"){
+            obj.addEventListener('click', () => {
+                if(result == null){
+                    result = breakToNum(breakNum)
+                }else{
+                    if(breakNum.length && operationStory != null){
+                        result = operations[operationStory](breakToNum(breakNum), result)
+                        output!.innerHTML = String(result)
+                    }
+                }
+
+                breakNum = []
+                
+                operationMap.push(this.content)
+                operations.push(this.operation)
+
+                operationStory = operationMap.findIndex((c) => c === this.content)
+            })
         }
     }
 }
@@ -26,88 +58,11 @@ class IterativeElement {
 const fatherElement = document.querySelector('#main');
 const output = document.querySelector('.output')
 
-const creatButtoms = [
-    {
-        content: "7",
-        type: "number",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "8",
-        type: "number",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "9",
-        type: "number",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "+",
-        type: "operator",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "4",
-        type: "number",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "5",
-        type: "number",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "6",
-        type: "number",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "-",
-        type: "operator",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "1",
-        type: "number",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "2",
-        type: "number",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "3",
-        type: "number",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "/",
-        type: "operator",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "AC",
-        type: "result",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "0",
-        type: "number",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "=",
-        type: "result",
-        operation: (n:any) => {return n}
-    },
-    {
-        content: "X",
-        type: "operator",
-        operation: (n:any) => {return n}
-    }
-];
+let breakNum:number[] = []
+let result:number | null = null
+let operationStory:number | null = null
+let operations: any[] = []
+let operationMap: any[] = []
 
 const buttomsObj: IterativeElement[] = [];
 
@@ -133,12 +88,14 @@ function drawButtoms(): void {
     for(let i = 1; i < line; i++){
         orderButtons.push([])
     }
+    
+    outPutWidth(collum)
 
     let i = 1
     let n = 1
     let m = 1
     let e = 0
-    
+
     while(i <= (collum * line) + line){
 
         if(n <= line + 1){
@@ -158,7 +115,7 @@ function drawButtoms(): void {
         }
         i++
     }
-  
+
     orderButtons.map((a, q) => {
 
         const d: HTMLElement = document.createElement('div');
@@ -167,7 +124,7 @@ function drawButtoms(): void {
         d.classList.add('collum');
         const dElement = document.getElementById(`${q}`);
 
-        a.map((b, n) => {
+        a.map((b) => {
             const e: HTMLElement = document.createElement('button');
             if(b.type != 'null'){
                 e.textContent = b.content;
@@ -179,6 +136,14 @@ function drawButtoms(): void {
     })
 
 
+}
+
+function breakToNum(bA:number[]){
+    let n = 0
+    for(let i = 0; i < bA.length; i++){
+        n += bA[i] * Math.pow(10, i)
+    }
+    return n
 }
 
 appInit();
